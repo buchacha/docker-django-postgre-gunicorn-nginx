@@ -1,0 +1,10 @@
+docker-compose exec web python manage.py migrate --noinput
+docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
+docker volume inspect docker-django-postgre-gunicorn-nginx_postgres_data
+docker volume ls
+docker-compose up -d --build
+docker-compose logs -f
+docker build -f Dockerfile -t image_name .
+run -p 8001:8000 \
+    -e "SECRET_KEY=please_change_me" -e "DEBUG=1" -e "DJANGO_ALLOWED_HOSTS=*" \
+    image_name python /usr/src/app/manage.py runserver 0.0.0.0:8000
